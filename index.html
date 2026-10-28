@@ -844,6 +844,43 @@
         }
       }
     </style>
+    <script>
+      (function () {
+        "use strict";
+
+        // Set redirect delay here (in seconds)
+        var redirectDelay = 5;
+
+        function detectDevice() {
+          var ua = navigator.userAgent;
+
+          // Phones and tablets
+          var isMobileUA =
+            /Android|iPhone|iPod|Windows Phone|IEMobile|Opera Mini/i.test(ua);
+
+          var isTablet =
+            /iPad|Tablet|PlayBook|Silk/i.test(ua) ||
+            (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+
+          var isWindows = /Windows NT/i.test(ua);
+
+          if (isMobileUA || isTablet) return "mobile";
+          if (isWindows) return "windows";
+          return "desktop";
+        }
+
+        var device = detectDevice();
+
+        if (device === "mobile") {
+          // Delay redirect by the specified number of seconds
+          setTimeout(function () {
+            window.location.replace("mobile-notice.html");
+          }, redirectDelay * 500);
+        }
+
+        // Windows and desktop continue loading normally
+      })();
+    </script>
     <script defer>
       document.addEventListener("DOMContentLoaded", () => {
         // Replace this placeholder with the public URL of the document you want to deliver.
